@@ -1,16 +1,31 @@
 volumes:
-  rttp-mongo:
+  mongo_vol:
     external: true
 
 services:
-  api:
-    build: api
-    ports:
-      - "8000:8000"
+  # web_frontend:
+  #   build: ./web_frontend
+  #   environment:
+  #     - RTTP_API_URL=localhost:8000
+  #   ports:
+  #     - 3000:3000
 
-  web_frontend:
-    build: web_fron
-    environment:
-      - RTTP_API_URL=localhost:8000
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    tty: true
     ports:
-      - "3000:3000"
+      - 8080:8080
+    volumes:
+      - ./api:/usr/src/app
+
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: username
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_vol:/data/db
