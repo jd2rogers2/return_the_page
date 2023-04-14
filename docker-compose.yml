@@ -1,0 +1,16 @@
+volumes:
+  rttp-mongo:
+    external: true
+
+services:
+  api:
+    build: api
+    ports:
+      - "8000:8000"
+
+  web_frontend:
+    build: web_fron
+    environment:
+      - RTTP_API_URL=localhost:8000
+    ports:
+      - "3000:3000"
