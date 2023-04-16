@@ -6,7 +6,7 @@ services:
   # web_frontend:
   #   build: ./web_frontend
   #   environment:
-  #     - RTTP_API_URL=localhost:8000
+  #     - RTTP_API_URL=localhost:8080
   #   ports:
   #     - 3000:3000
 
@@ -18,7 +18,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./api:/usr/src/app
+      - ./api:/app
 
   mongodb:
     image: mongo:latest
@@ -29,3 +29,5 @@ services:
       - 27017:27017
     volumes:
       - mongo_vol:/data/db
+    environment:
+      - DATABASE_URL=mongo://username:password@mongo_vol
